@@ -6,8 +6,11 @@ ENV SOURCE_VERSION=$SOURCE_VERSION
 ARG SOURCE_COMMIT
 ENV SOURCE_COMMIT=$SOURCE_COMMIT
 
-ENV KUBECTL_VERSION="1.35"
-ENV HELM_VERSION="3.20.0"
+ENV K8S_VERSION="1.35"
+
+# renovate: depName=helm registryUrls=https://packages.buildkite.com/helm-linux/helm-debian/any/?suite=any&components=main
+ENV HELM_VERSION="3.19.3-1"
+
 ENV YQ_VERSION="4.52.4"
 
 RUN apt-get update && \
@@ -17,10 +20,10 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 # kubectl
-RUN curl -fsSL "https://pkgs.k8s.io/core:/stable:/v${KUBECTL_VERSION}/deb/Release.key" | \
+RUN curl -fsSL "https://pkgs.k8s.io/core:/stable:/v${K8S_VERSION}/deb/Release.key" | \
   gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
   chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
-  echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v${KUBECTL_VERSION}/deb/ /" > \
+  echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v${K8S_VERSION}/deb/ /" > \
   /etc/apt/sources.list.d/kubernetes.list && \
   apt-get update && \
   apt-get install -y kubectl
@@ -30,7 +33,7 @@ RUN curl -fsSL https://packages.buildkite.com/helm-linux/helm-debian/gpgkey | gp
   echo "deb [signed-by=/usr/share/keyrings/helm.gpg] https://packages.buildkite.com/helm-linux/helm-debian/any/ any main" | \
   tee /etc/apt/sources.list.d/helm-stable-debian.list && \
   apt-get update && \
-  apt-get install "helm=${HELM_VERSION}-1"
+  apt-get install "helm=${HELM_VERSION}"
 
 # docker
 RUN curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && \
