@@ -8,9 +8,10 @@ ENV SOURCE_COMMIT=$SOURCE_COMMIT
 
 ENV KUBECTL_VERSION="1.35"
 ENV HELM_VERSION="3.20.0"
+ENV YQ_VERSION="4.52.4"
 
 RUN apt-get update && \
-  apt-get install -y apt-transport-https ca-certificates curl figlet git gnupg jq yq && \
+  apt-get install -y apt-transport-https ca-certificates curl figlet git gnupg jq && \
   apt-get autoremove && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
@@ -38,6 +39,11 @@ RUN curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings
   tee /etc/apt/sources.list.d/docker.list && \
   apt-get update && \
   apt-get install -y docker-ce-cli docker-compose-plugin
+
+# yq
+RUN curl -fsSL "https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_$([[ "$(uname -m)" == "aarch64" ]] && echo "arm64" || echo "amd64")" \
+  -o /usr/local/bin/yq && \
+  chmod +x /usr/local/bin/yq
 
 ADD info.sh /root
 
