@@ -10,10 +10,23 @@
         "/^Dockerfile$/"
       ],
       "matchStrings": [
-        "# renovate: repo=(?<repo>.+) suite=(?<suite>.+) components=(?<components>.+) depName=(?<depName>.+)\\sENV .+_VERSION=\"(?<currentValue>.+)\""
+        "# renovate: repo=(?<repo>.+) suite=(?<suite>.+) components=(?<components>.*) depName=(?<depName>.+)\\sENV .+_VERSION=\"(?<currentValue>.+)\""
       ],
       "registryUrlTemplate": "{{repo}}?suite={{suite}}&components={{components}}&binaryArch=amd64",
       "datasourceTemplate": "deb"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "(^|/)Dockerfile$"
+      ],
+      "matchStrings": [
+        "ENV K8S_VERSION=\"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "kubernetes/kubernetes",
+      "extractVersionTemplate": "^v(?<version>.*)$",
+      "versioningTemplate": "semver"
     }
   ]
 }

@@ -6,7 +6,9 @@ ENV SOURCE_VERSION=$SOURCE_VERSION
 ARG SOURCE_COMMIT
 ENV SOURCE_COMMIT=$SOURCE_COMMIT
 
-ENV K8S_VERSION="1.35"
+ENV K8S_VERSION="1.35.0"
+ENV K8S_PACKAGE_VERSION="${K8S_VERSION}-1.1"
+ENV K8S_REPO_VERSION="v1.35"
 
 # renovate: repo=https://packages.buildkite.com/helm-linux/helm-debian/any/ suite=any components=main depName=helm
 ENV HELM_VERSION="3.19.3-1"
@@ -20,13 +22,13 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 # kubectl
-RUN curl -fsSL "https://pkgs.k8s.io/core:/stable:/v${K8S_VERSION}/deb/Release.key" | \
+RUN curl -fsSL "https://pkgs.k8s.io/core:/stable:/${K8S_REPO_VERSION}/deb/Release.key" | \
   gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
   chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
-  echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v${K8S_VERSION}/deb/ /" > \
+  echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/${K8S_REPO_VERSION}/deb/ /" > \
   /etc/apt/sources.list.d/kubernetes.list && \
   apt-get update && \
-  apt-get install -y kubectl
+  apt-get install -y kubectl:${K8S_PACKAGE_VERSION}
 
 # helm
 RUN curl -fsSL https://packages.buildkite.com/helm-linux/helm-debian/gpgkey | gpg --dearmor -o /usr/share/keyrings/helm.gpg && \
