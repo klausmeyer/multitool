@@ -1,0 +1,44 @@
+FROM debian:trixie-20260202
+
+ARG MULTITOOL_VERSION
+
+ENV MULTITOOL_VERSION="${MULTITOOL_VERSION:-unknown}"
+
+ENV KUBECTL_VERSION="1.35"
+ENV HELM_VERSION="3.20.0"
+
+RUN apt-get update && \
+  apt-get install -y apt-transport-https ca-certificates curl gnupg figlet jq yq
+
+# Add tools
+
+# kubectl
+
+RUN curl -fsSL "https://pkgs.k8s.io/core:/stable:/v${KUBECTL_VERSION}/deb/Release.key" | \
+  gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
+  chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
+  echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v${KUBECTL_VERSION}/deb/ /" > \
+  /etc/apt/sources.list.d/kubernetes.list && \
+  apt-get update && \
+  apt-get install -y kubectl
+
+# helm
+
+RUN curl -fsSL https://packages.buildkite.com/helm-linux/helm-debian/gpgkey | gpg --dearmor -o /usr/share/keyrings/helm.gpg && \
+  echo "deb [signed-by=/usr/share/keyrings/helm.gpg] https://packages.buildkite.com/helm-linux/helm-debian/any/ any main" | \
+  tee /etc/apt/sources.list.d/helm-stable-debian.list && \
+  apt-get update && \
+  apt-get install "helm=${HELM_VERSION}-1"
+
+# docker
+
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && \
+  chmod 644 /etc/apt/keyrings/docker.asc && \
+  echo "deb [signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian trixie stable" | \
+  tee /etc/apt/sources.list.d/docker.list && \
+  apt-get update && \
+  apt-get install -y docker-ce-cli docker-compose-plugin
+
+ADD info.sh /root
+
+CMD ["/root/info.sh"]
