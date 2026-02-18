@@ -8,7 +8,7 @@ ENV SOURCE_COMMIT=$SOURCE_COMMIT
 
 ENV K8S_VERSION="1.35"
 
-# renovate: depName=helm registryUrl=https://packages.buildkite.com/helm-linux/helm-debian/any/?suite=any&components=main&binaryArch=all
+# renovate: repo=https://packages.buildkite.com/helm-linux/helm-debian/any/ suite=any components=main depName=helm
 ENV HELM_VERSION="3.19.3-1"
 
 ENV YQ_VERSION="4.52.4"

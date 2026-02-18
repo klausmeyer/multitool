@@ -10,8 +10,9 @@
         "/^Dockerfile$/"
       ],
       "matchStrings": [
-        "# renovate: depName=(?<depName>.+) registryUrl=(?<registryUrl>.+)\\sENV .+_VERSION=\"(?<currentValue>.+)\""
+        "# renovate: repo=(?<repo>.+) suite=(?<suite>.+) components=(?<components>.+) depName=(?<depName>.+)\\sENV .+_VERSION=\"(?<currentValue>.+)\""
       ],
+      "registryUrlTemplate": "{{repo}}?suite={{suite}}&components={{components}}&binaryArch=amd64",
       "datasourceTemplate": "deb"
     }
   ]
