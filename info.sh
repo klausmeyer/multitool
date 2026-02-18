@@ -2,8 +2,9 @@
 
 figlet Multitool
 
-echo "Version: ${MULTITOOL_VERSION}"
+echo "Version: ${SOURCE_VERSION} (git: ${SOURCE_COMMIT:0:7})"
 
+echo
 echo "[ + ] system"
 echo
 
