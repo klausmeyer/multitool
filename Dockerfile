@@ -28,7 +28,7 @@ RUN curl -fsSL "https://pkgs.k8s.io/core:/stable:/${K8S_REPO_VERSION}/deb/Releas
   echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/${K8S_REPO_VERSION}/deb/ /" > \
   /etc/apt/sources.list.d/kubernetes.list && \
   apt-get update && \
-  apt-get install -y kubectl:${K8S_PACKAGE_VERSION}
+  apt-get install -y "kubectl=${K8S_PACKAGE_VERSION}"
 
 # helm
 RUN curl -fsSL https://packages.buildkite.com/helm-linux/helm-debian/gpgkey | gpg --dearmor -o /usr/share/keyrings/helm.gpg && \
