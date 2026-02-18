@@ -10,7 +10,7 @@
         "/^Dockerfile$/"
       ],
       "matchStrings": [
-        "# renovate: depName=(?<depName>.+) registryUrls=(?<registryUrls>.+)\\sENV .+_VERSION=\"(?<currentValue>.+)\""
+        "# renovate: depName=(?<depName>.+) registryUrl=(?<registryUrl>.+)\\sENV .+_VERSION=\"(?<currentValue>.+)\""
       ],
       "datasourceTemplate": "deb"
     }
