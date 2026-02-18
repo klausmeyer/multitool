@@ -41,7 +41,7 @@ RUN curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings
   apt-get install -y docker-ce-cli docker-compose-plugin
 
 # yq
-RUN curl -fsSL "https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_$([[ "$(uname -m)" == "aarch64" ]] && echo "arm64" || echo "amd64")" \
+RUN curl -fsSL "https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_$(test "$(uname -m)" = "aarch64" && echo "arm64" || echo "amd64")" \
   -o /usr/local/bin/yq && \
   chmod +x /usr/local/bin/yq
 
