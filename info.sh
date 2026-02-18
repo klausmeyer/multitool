@@ -32,5 +32,6 @@ echo
 echo "[ + ] utils"
 echo
 
+git --version
 jq --version
 yq --version
