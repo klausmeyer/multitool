@@ -7,7 +7,7 @@ ARG SOURCE_COMMIT
 ENV SOURCE_COMMIT=$SOURCE_COMMIT
 
 ENV K8S_VERSION="1.36.2"
-ENV K8S_PACKAGE_VERSION="${K8S_VERSION}-1.1"
+ENV K8S_PACKAGE_VERSION="${K8S_VERSION}-2.1"
 ENV K8S_REPO_VERSION="v1.36"
 
 # renovate: repo=https://packages.buildkite.com/helm-linux/helm-debian/any/ suite=any components=main depName=helm
