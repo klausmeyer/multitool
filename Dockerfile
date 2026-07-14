@@ -11,7 +11,7 @@ ENV K8S_PACKAGE_VERSION="${K8S_VERSION}-2.1"
 ENV K8S_REPO_VERSION="v1.36"
 
 # renovate: repo=https://packages.buildkite.com/helm-linux/helm-debian/any/ suite=any components=main depName=helm
-ENV HELM_VERSION="4.2.0-1"
+ENV HELM_VERSION="4.2.3-1"
 
 ENV YQ_VERSION="4.52.4"
 
