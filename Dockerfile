@@ -7,7 +7,6 @@ ARG SOURCE_COMMIT
 ENV SOURCE_COMMIT=$SOURCE_COMMIT
 
 ENV K8S_VERSION="1.36.3"
-ENV K8S_PACKAGE_VERSION="${K8S_VERSION}-1.1"
 ENV K8S_REPO_VERSION="v1.36"
 
 # renovate: repo=https://packages.buildkite.com/helm-linux/helm-debian/any/ suite=any components=main depName=helm
@@ -28,7 +27,7 @@ RUN curl -fsSL "https://pkgs.k8s.io/core:/stable:/${K8S_REPO_VERSION}/deb/Releas
   echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/${K8S_REPO_VERSION}/deb/ /" > \
   /etc/apt/sources.list.d/kubernetes.list && \
   apt-get update && \
-  apt-get install -y "kubectl=${K8S_PACKAGE_VERSION}"
+  apt-get install -y "kubectl=${K8S_VERSION}*"
 
 # helm
 RUN curl -fsSL https://packages.buildkite.com/helm-linux/helm-debian/gpgkey | gpg --dearmor -o /usr/share/keyrings/helm.gpg && \
